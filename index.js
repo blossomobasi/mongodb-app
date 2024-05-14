@@ -27,6 +27,9 @@ async function createCourse() {
 }
 
 async function getCourse() {
+  const pageNumber = 2;
+  const pageSize = 10;
+
   // Comparison operators in mongodb
   // eq (equal)
   // gt (greater than)
@@ -36,16 +39,35 @@ async function getCourse() {
   // in
   // nin (not in)
 
+  // Logical Operators
+
   const courses = await Course
-    //   .find({
-    //     author: "Blossom",
-    //     isPublished: true,
-    //   })
+
     // .find({ price: { $gt: 10, $lte: 20 } })
-    .find({ price: { $in: [10, 15, 20] } })
-    .limit(10)
+    // .find({ price: { $in: [10, 15, 20] } })
+    // .find()
+    // .or([{ author: "Blossom" }, { isPublished: true }]) // Get courses authored by 'Blossom' or courses that is published
+    // .and([ ])
+
+    // Starts with Blossom
+    // .find({ author: /^Blossom/ }) // case sensitive
+
+    // Ends with Obasi
+    // .find({ author: /Obasi$/i }) // case insensitive
+
+    // Contains Blossom
+    // .find({ author: /.*Blossom.*/ })
+
+    .find({
+      author: "Blossom",
+      isPublished: true,
+    })
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize)
+    // .limit(10)
     .sort({ name: 1 })
-    .select({ name: 1, tags: 1 });
+    // .select({ name: 1, tags: 1 });
+    .count();
   console.log(courses);
 }
 
