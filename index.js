@@ -83,7 +83,6 @@ async function updateCourse(id) {
   // course.author = "Another Author";
   // const result = await course.save();
   // console.log(result);
-
   // Update directly
   // const result = await Course.update(
   //   { _id: id },
@@ -95,8 +94,20 @@ async function updateCourse(id) {
   //   }
   // );
   // console.log(result);
-
   // get document of what was updated
+  // const course = await Course.findByIdAndUpdate(
+  //   id,
+  //   {
+  //     $set: {
+  //       author: "Dalington",
+  //       isPublished: false,
+  //     },
+  //   },
+  //   { new: true }
+  // );
+  // console.log(course);
+
+  //  get document of what was updated
   const course = await Course.findByIdAndUpdate(
     id,
     {
@@ -110,4 +121,17 @@ async function updateCourse(id) {
   console.log(course);
 }
 
-updateCourse("66437889b9db3929bcd9fa4b");
+async function removeCourse(id) {
+  // Delete one
+  // const result = await Course.deleteOne({ _id: id });
+  // console.log(result);
+
+  // Delete many
+  // const result = await Course.deleteMany({_id: id});
+
+  // Get document that was deleted
+  const course = await Course.findByIdAndRemove(id);
+  console.log(course);
+}
+
+removeCourse("66437889b9db3929bcd9fa4b");
