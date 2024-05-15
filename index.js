@@ -20,24 +20,24 @@ const courseSchema = new mongoose.Schema({
   // tags: [String],
   tags: {
     type: Array,
-    // validate: {
-    //   validator: function (v) {
-    //     return v && v.length > 0;
-    //   },
-    //   message: "A course should have at least on tag.",
-    // },
+    validate: {
+      validator: function (v) {
+        return v && v.length > 0;
+      },
+      message: "A course should have at least on tag.",
+    },
 
     // Async validation
-    validate: {
-      isAsync: true,
-      validator: function (v, callback) {
-        setTimeout(() => {
-          const result = v && v.length > 0;
-          callback(result);
-        }, 4000);
-      },
-      message: "A course should have at least one tag.",
-    },
+    // validate: {
+    //   isAsync: true,
+    //   validator: function (v, callback) {
+    //     setTimeout(() => {
+    //       const result = v && v.length > 0;
+    //       callback(result);
+    //     }, 4000);
+    //   },
+    //   message: "A course should have at least one tag.",
+    // },
   },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
@@ -57,7 +57,7 @@ async function createCourse() {
   const course = new Course({
     name: "Angular Course",
     author: "Blossom",
-    category: "web",
+    category: "-",
     // tags: ["angular", "frontend"],
     tags: null,
     isPublished: true,
@@ -66,8 +66,10 @@ async function createCourse() {
   try {
     const result = await course.save();
     console.log(result);
-  } catch (err) {
-    console.log(err.message);
+  } catch (ex) {
+    for (field in ex.errors) {
+      console.log(ex.errors[field].message);
+    }
   }
 }
 
