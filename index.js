@@ -72,21 +72,42 @@ async function getCourse() {
 }
 
 async function updateCourse(id) {
-  // Approach: Query first
-  // findById()
-  // Modify its properties
-  // save()
-  const course = await Course.findById(id);
-  if (!course) return console.log("This course does not exist");
-  // course.set({
-  //   isPublished: true,
-  //   author: "Another Author",
-  // });
+  // Update a course
+  // const course = await Course.findById(id);
+  // if (!course) return console.log("This course does not exist");
+  // // course.set({
+  // //   isPublished: true,
+  // //   author: "Another Author",
+  // // });
+  // course.isPublished = true;
+  // course.author = "Another Author";
+  // const result = await course.save();
+  // console.log(result);
 
-  course.isPublished = true;
-  course.author = "Another Author";
-  const result = await course.save();
-  console.log(result);
+  // Update directly
+  // const result = await Course.update(
+  //   { _id: id },
+  //   {
+  //     $set: {
+  //       author: "Blossom",
+  //       isPublished: false,
+  //     },
+  //   }
+  // );
+  // console.log(result);
+
+  // get document of what was updated
+  const course = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author: "Dalington",
+        isPublished: false,
+      },
+    },
+    { new: true }
+  );
+  console.log(course);
 }
 
 updateCourse("66437889b9db3929bcd9fa4b");
