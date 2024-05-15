@@ -71,4 +71,22 @@ async function getCourse() {
   console.log(courses);
 }
 
-getCourse();
+async function updateCourse(id) {
+  // Approach: Query first
+  // findById()
+  // Modify its properties
+  // save()
+  const course = await Course.findById(id);
+  if (!course) return console.log("This course does not exist");
+  // course.set({
+  //   isPublished: true,
+  //   author: "Another Author",
+  // });
+
+  course.isPublished = true;
+  course.author = "Another Author";
+  const result = await course.save();
+  console.log(result);
+}
+
+updateCourse("66437889b9db3929bcd9fa4b");
